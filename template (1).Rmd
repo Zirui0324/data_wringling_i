@@ -3,14 +3,13 @@ title: "Data Wrangling 1"
 output: html_document
 ---
 
-# Data wrangling 1
-This is the repo associated with code for lectures in data wrangling 1 in p8105
+This is the repo associated with code for lectures in data wrangling 1 in p8105.
 
 
 ```{r chunk_import data}
 library(tidyverse)
 
-litters_data = read_csv(file = "./data/data_import_examples (1)/data_import_examples/FAS_litters.csv",
+litters_data = read_csv(file = "./data/FAS_litters.csv",
   col_types = cols(
     Group = col_character(),
     `Litter Number` = col_character(),
@@ -45,7 +44,7 @@ view(litters_data)
 ```
 
 ```{r}
-litters_data = read_csv(file = "./data/data_import_examples (1)/data_import_examples/FAS_litters.csv",
+litters_data = read_csv(file = "./data/FAS_litters.csv",
   skip = 10, col_names = FALSE)
 ```
 
