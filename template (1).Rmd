@@ -48,6 +48,28 @@ read_csv(file = "./data/FAS_litters.csv",
          col_names = FALSE)
 ```
 
+## Other file formats
+
+We need to read in an excel spreadsheet.
+```{r}
+library(readxl)
+read_excel("./data/mlb11.xlsx")
+```
+
+```{r}
+LotR_Words = read_excel(
+  "data/LotR_Words.xlsx",
+  range = "B3:D6")
+```
+
+## More formats
+
+Read in a SAS format.
+
+```{r}
+
+```
+
 
 
 

@@ -140,3 +140,39 @@ read_csv(file = "./data/FAS_litters.csv",
     ##  9 Con8  #3/5/2/2/95      28.5  NA      20     8    NA     8
     ## 10 Con8  #5/4/3/83/3      28    NA      19     9    NA     8
     ## # … with 38 more rows
+
+## Other file formats
+
+We need to read in an excel spreadsheet.
+
+``` r
+library(readxl)
+read_excel("./data/mlb11.xlsx")
+```
+
+    ## # A tibble: 30 × 12
+    ##    team         runs at_bats  hits homer…¹ bat_avg strik…² stole…³  wins new_o…⁴
+    ##    <chr>       <dbl>   <dbl> <dbl>   <dbl>   <dbl>   <dbl>   <dbl> <dbl>   <dbl>
+    ##  1 Texas Rang…   855    5659  1599     210   0.283     930     143    96   0.34 
+    ##  2 Boston Red…   875    5710  1600     203   0.28     1108     102    90   0.349
+    ##  3 Detroit Ti…   787    5563  1540     169   0.277    1143      49    95   0.34 
+    ##  4 Kansas Cit…   730    5672  1560     129   0.275    1006     153    71   0.329
+    ##  5 St. Louis …   762    5532  1513     162   0.273     978      57    90   0.341
+    ##  6 New York M…   718    5600  1477     108   0.264    1085     130    77   0.335
+    ##  7 New York Y…   867    5518  1452     222   0.263    1138     147    97   0.343
+    ##  8 Milwaukee …   721    5447  1422     185   0.261    1083      94    96   0.325
+    ##  9 Colorado R…   735    5544  1429     163   0.258    1201     118    73   0.329
+    ## 10 Houston As…   615    5598  1442      95   0.258    1164     118    56   0.311
+    ## # … with 20 more rows, 2 more variables: new_slug <dbl>, new_obs <dbl>, and
+    ## #   abbreviated variable names ¹​homeruns, ²​strikeouts, ³​stolen_bases,
+    ## #   ⁴​new_onbase
+
+``` r
+LotR_Words = read_excel(
+  "data/LotR_Words.xlsx",
+  range = "B3:D6")
+```
+
+## More formats
+
+Read in a SAS format.
