@@ -399,6 +399,22 @@ select(litters_data, group, litter_number, gd0_weight, pups_born_alive)</code></
 ## 2 Con7  #1/2/95/2           27                 8
 ## 3 Con7  #5/5/3/83/3-3       26                 6
 ## # … with 46 more rows</code></pre>
+<pre class="r"><code>select(litters_data, group:gd_of_birth)</code></pre>
+<pre><code>## # A tibble: 49 × 5
+##   group litter_number gd0_weight gd18_weight gd_of_birth
+##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;       &lt;int&gt;
+## 1 Con7  #85                 19.7        34.7          20
+## 2 Con7  #1/2/95/2           27          42            19
+## 3 Con7  #5/5/3/83/3-3       26          41.4          19
+## # … with 46 more rows</code></pre>
+<pre class="r"><code>select(litters_data, -pups_survive)</code></pre>
+<pre><code>## # A tibble: 49 × 7
+##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive pups_…¹
+##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;       &lt;int&gt;           &lt;int&gt;   &lt;int&gt;
+## 1 Con7  #85                 19.7        34.7          20               3       4
+## 2 Con7  #1/2/95/2           27          42            19               8       0
+## 3 Con7  #5/5/3/83/3-3       26          41.4          19               6       0
+## # … with 46 more rows, and abbreviated variable name ¹​pups_dead_birth</code></pre>
 
 
 
