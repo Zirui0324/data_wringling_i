@@ -20,7 +20,7 @@ pups_data = janitor::clean_names(pups_data)
 view(pups_data)
 ```
 
-```{r chunk_function_select}
+```{r chunk_function_select, eval=FALSE}
 # select(tibble, variable1, variable2, ...)
 select(litters_data, group, litter_number, gd0_weight, pups_born_alive)
 select(litters_data, group:gd_of_birth)
@@ -35,7 +35,7 @@ relocate(litters_data, litter_number, pups_survive)
 select(pups_data, litter_number, sex, pd_ears)
 ```
 
-```{r chunk_function_filter}
+```{r chunk_function_filter, eval=FALSE}
 filter(litters_data, gd_of_birth == 20)
 filter(litters_data, pups_born_alive >= 2)
 filter(litters_data, pups_survive != 4)
@@ -52,7 +52,7 @@ filter(pups_data, sex == 1)
 filter(pups_data, pd_walk < 11, sex == 2)
 ```
 
-```{r chunk_function_mutate}
+```{r chunk_function_mutate, eval=FALSE}
 mutate(litters_data,
   wt_gain = gd18_weight - gd0_weight,
   group = str_to_lower(group)
@@ -70,12 +70,12 @@ mutate(pups_data,
 # sum changed
 ```
 
-```{r chunk_function_arrage}
+```{r chunk_function_arrage, eval=FALSE}
 head(arrange(litters_data, group, pups_born_alive), 10)
 
 ```
 
-```{r chunk_pipe}
+```{r chunk_pipe, eval=FALSE}
 # %>% "and then"
 litters_data = 
   read_csv("./data/FAS_litters.csv", col_types = "ccddiiii") %>%
@@ -85,8 +85,27 @@ litters_data =
     wt_gain = gd18_weight - gd0_weight,
     group = str_to_lower(group)) %>% 
   drop_na(wt_gain)
-
 ```
+
+```{r chunk_dplyr, eval=FALSE}
+litters_data = 
+  read_csv("./data/FAS_litters.csv", col_types = "ccddiiii") %>%
+  janitor::clean_names(dat = .) %>%
+  select(.data = ., -pups_survive) %>%
+  mutate(.data = .,
+    wt_gain = gd18_weight - gd0_weight,
+    group = str_to_lower(group)) %>% 
+  drop_na(data = ., wt_gain)
+# the dataset argument is called dat in janitor::clean_names, .data in the dplyr functions, and data in drop_na
+
+# Learning Assessment: Write a chain of commands that:
+# loads the pups data
+# cleans the variable names
+# filters the data to include only pups with sex 1
+# removes the PD ears variable
+# creates a variable that indicates whether PD pivot is 7 or more days
+```
+
 
 
 

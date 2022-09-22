@@ -391,30 +391,72 @@ pups_data = read_csv(&quot;./data/FAS_pups.csv&quot;,
 pups_data = janitor::clean_names(pups_data)
 view(pups_data)</code></pre>
 <pre class="r"><code># select(tibble, variable1, variable2, ...)
-select(litters_data, group, litter_number, gd0_weight, pups_born_alive)</code></pre>
-<pre><code>## # A tibble: 49 × 4
-##   group litter_number gd0_weight pups_born_alive
-##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;           &lt;int&gt;
-## 1 Con7  #85                 19.7               3
-## 2 Con7  #1/2/95/2           27                 8
-## 3 Con7  #5/5/3/83/3-3       26                 6
-## # … with 46 more rows</code></pre>
-<pre class="r"><code>select(litters_data, group:gd_of_birth)</code></pre>
-<pre><code>## # A tibble: 49 × 5
-##   group litter_number gd0_weight gd18_weight gd_of_birth
-##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;       &lt;int&gt;
-## 1 Con7  #85                 19.7        34.7          20
-## 2 Con7  #1/2/95/2           27          42            19
-## 3 Con7  #5/5/3/83/3-3       26          41.4          19
-## # … with 46 more rows</code></pre>
-<pre class="r"><code>select(litters_data, -pups_survive)</code></pre>
-<pre><code>## # A tibble: 49 × 7
-##   group litter_number gd0_weight gd18_weight gd_of_birth pups_born_alive pups_…¹
-##   &lt;chr&gt; &lt;chr&gt;              &lt;dbl&gt;       &lt;dbl&gt;       &lt;int&gt;           &lt;int&gt;   &lt;int&gt;
-## 1 Con7  #85                 19.7        34.7          20               3       4
-## 2 Con7  #1/2/95/2           27          42            19               8       0
-## 3 Con7  #5/5/3/83/3-3       26          41.4          19               6       0
-## # … with 46 more rows, and abbreviated variable name ¹​pups_dead_birth</code></pre>
+select(litters_data, group, litter_number, gd0_weight, pups_born_alive)
+select(litters_data, group:gd_of_birth)
+select(litters_data, -pups_survive)
+select(litters_data, GROUP = group, LiTtEr_NuMbEr = litter_number)
+rename(litters_data, GROUP = group, LiTtEr_NuMbEr = litter_number)
+select(litters_data, starts_with(&quot;gd&quot;))
+select(litters_data, litter_number, pups_survive, everything())
+relocate(litters_data, litter_number, pups_survive)
+
+# Learning Assessment: In the pups data, select the columns containing litter number, sex, and PD ears.
+select(pups_data, litter_number, sex, pd_ears)</code></pre>
+<pre class="r"><code>filter(litters_data, gd_of_birth == 20)
+filter(litters_data, pups_born_alive &gt;= 2)
+filter(litters_data, pups_survive != 4)
+filter(litters_data, !(pups_survive == 4))
+filter(litters_data, group %in% c(&quot;Con7&quot;, &quot;Con8&quot;))
+filter(litters_data, group == &quot;Con7&quot; &amp; gd_of_birth == 20)
+filter(litters_data, drop_na(litters_data))
+filter(litters_data, drop_na(litters_data, wt_increase) )
+
+# Learning Assessment: In the pups data:
+# Filter to include only pups with sex 1
+# Filter to include only pups with PD walk less than 11 and sex 2
+filter(pups_data, sex == 1)
+filter(pups_data, pd_walk &lt; 11, sex == 2)</code></pre>
+<pre class="r"><code>mutate(litters_data,
+  wt_gain = gd18_weight - gd0_weight,
+  group = str_to_lower(group)
+)
+
+# Learning Assessment: In the pups data:
+# Create a variable that subtracts 7 from PD pivot
+# Create a variable that is the sum of all the PD variables
+mutate(pups_data, 
+       pd_ears = pd_ears - 7,
+       pd_eyes = pd_eyes - 7,
+       pd_pivot = pd_pivot - 7,
+       pd_walk = pd_walk - 7,
+       pd_sum = pd_ears + pd_eyes + pd_pivot + pd_walk)
+# sum changed</code></pre>
+<pre class="r"><code>head(arrange(litters_data, group, pups_born_alive), 10)</code></pre>
+<pre class="r"><code># %&gt;% &quot;and then&quot;
+litters_data = 
+  read_csv(&quot;./data/FAS_litters.csv&quot;, col_types = &quot;ccddiiii&quot;) %&gt;%
+  janitor::clean_names() %&gt;%
+  select(-pups_survive) %&gt;%
+  mutate(
+    wt_gain = gd18_weight - gd0_weight,
+    group = str_to_lower(group)) %&gt;% 
+  drop_na(wt_gain)</code></pre>
+<pre class="r"><code>litters_data = 
+  read_csv(&quot;./data/FAS_litters.csv&quot;, col_types = &quot;ccddiiii&quot;) %&gt;%
+  janitor::clean_names(dat = .) %&gt;%
+  select(.data = ., -pups_survive) %&gt;%
+  mutate(.data = .,
+    wt_gain = gd18_weight - gd0_weight,
+    group = str_to_lower(group)) %&gt;% 
+  drop_na(data = ., wt_gain)
+# the dataset argument is called dat in janitor::clean_names, .data in the dplyr functions, and data in drop_na
+
+# Learning Assessment: Write a chain of commands that:
+# loads the pups data
+# cleans the variable names
+# filters the data to include only pups with sex 1
+# removes the PD ears variable
+# creates a variable that indicates whether PD pivot is 7 or more days</code></pre>
 
 
 
