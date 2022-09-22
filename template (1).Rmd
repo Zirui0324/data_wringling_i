@@ -57,7 +57,7 @@ read_excel("./data/mlb11.xlsx")
 ```
 
 ```{r}
-LotR_Words = read_excel(
+lotr_words = read_excel(
   "data/LotR_Words.xlsx",
   range = "B3:D6")
 ```
@@ -67,7 +67,16 @@ LotR_Words = read_excel(
 Read in a SAS format.
 
 ```{r}
+install.packages("haven")
+library(haven)
+pukse_data = read_sas("data/public_pulse_data.sas7bdat")
+```
 
+##  Data export
+
+```{r}
+library(readr)
+write_csv(lotr_words, file="results/lotr_words_data.csv")
 ```
 
 
